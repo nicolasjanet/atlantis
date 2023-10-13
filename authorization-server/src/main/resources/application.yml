@@ -1,0 +1,38 @@
+logging:
+  level:
+    org.springframework.security: TRACE
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: authorizationserver
+
+  datasource:
+    url: jdbc:mariadb://127.0.0.1:3306/atlantis
+    username: root
+    password: secret
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        type:
+          preferred_uuid_jdbc_type: CHAR
+
+  sql:
+    init:
+      mode: always
+
+authorization-server:
+  authorization-code:
+    redirect-uri: http://127.0.0.1:8083/login/oauth2/code/%s
+    post-logout-redirect-uri: http://127.0.0.1:8083/
+  jwt-signer:
+    key-store: file://@project.basedir@/../resources/jwt-signer.jks
+    key-store-password: verbatim
+    key-alias: jwt-signer

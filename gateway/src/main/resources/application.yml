@@ -1,0 +1,64 @@
+server:
+  port: 8083
+
+logging:
+  level:
+    org.springframework.security: TRACE
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+      exposure:
+        include:
+          - health
+          - info
+
+authorization-api-uri: http://localhost:8080
+foo-api-uri: http://localhost:8081
+bar-api-uri: http://localhost:8082
+
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      routes:
+        - id: foo
+          uri: ${foo-api-uri}
+          predicates:
+            - Path=/foos/**
+          filters:
+            - TokenRelay=
+        - id: bar
+          uri: ${bar-api-uri}
+          predicates:
+            - Path=/bars/**
+          filters:
+            - TokenRelay=
+        - id: ui
+          uri: http://localhost:4200
+          predicates:
+            - Path=/**
+  security:
+    oauth2:
+      client:
+        provider:
+          vialink:
+            issuer-uri: http://localhost:8080
+        registration:
+          gateway:
+            provider: vialink
+            client-id: gateway
+            client-secret: gatewaysecret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8083/login/oauth2/code/{registrationId}"
+            scope: openid
+            client-name: gateway

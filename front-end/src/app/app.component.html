@@ -1,0 +1,32 @@
+<div >
+  <span class="dropdown" *ngIf="isAuthenticated && user">
+    <div>Welcome {{user.firstName}} {{ user.lastName}} ({{user.identifier}})</div>
+    <div>
+      <span>Your roles:</span>
+      <ul>
+        <li *ngFor="let role of user.roles">{{role}}</li>
+      </ul>
+    </div>
+  </span>
+  <span *ngIf="!isAuthenticated">
+    <button (click)="login()">Log In</button>
+  </span>
+</div>
+
+<div class="container">
+  <div *ngIf="foo" class="panel-footer">
+    <h4>Foo Resource</h4>
+    <ul>
+      <li>{{foo.id}}</li>
+    </ul>
+  </div>
+  <div *ngIf="bar" class="panel-footer">
+    <h4>Bar Resource</h4>
+    <ul>
+      <li>{{bar.foo?.id}}</li>
+      <li>{{bar.baz}}</li>
+    </ul>
+  </div>
+</div>
+
+<button *ngIf="isAuthenticated" (click)="logout()">Log Out</button>

@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          vialink:
+            issuer-uri: http://localhost:8080
+        registration:
+          client:
+            provider: vialink
+            client-id: bar
+            client-secret: barsecret
+            authorization-grant-type: client_credentials
+            scope: openid
+            client-name: client
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080
+
+server:
+  port: 8082

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title th:text="#{auth.login.title}">Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="login-page-wrapper">
+    <div class="login-wrapper centered-container">
+        <div class="container container-600">
+            <img alt="Logo" class="logo-img logo-img--w120 u-margin-b-30" th:src="@{/images/vialink.svg}"/>
+            <form method="post" th:action="@{/mfa}" style="padding-bottom: 6rem">
+                <div class="login-card">
+                    <h1 class="login-h1 u-inline-center" th:text="#{auth.mfa.title}">Login</h1>
+                    <div class="login-form-group u-margin-t-30">
+                        <label for="code"
+                               class="login-form-label"
+                               th:text="#{auth.mfa.code.value}">Code</label>
+                        <input id="code"
+                               name="code"
+                               class="login-form-control border"
+                               th:placeholder="#{auth.mfa.code.placeholder}"
+                               required
+                               autofocus/>
+                    </div>
+                    <div class="u-inline-center u-margin-t-50">
+                        <button type="submit"
+                                name="button"
+                                class="login-button login-button--green10"
+                                th:text="#{auth.mfa.submit}"
+                        >Login
+                        </button>
+                        <br/>
+                        <p class="red10 u-inline-center u-margin-t-10" th:if="${param.error}">
+                            [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="p-d-flex p-jc-between">
+            <div class="p-d-flex p-ai-center">
+                <div class="p-mr-4">
+                    <a th:href="#{legal.legalInformation.href}"
+                       th:text="#{legal.legalInformation.title}"
+                       target="_blank"
+                    >Legal Notice</a>
+                </div>
+                <div class="p-mr-4">
+                    <a th:href="#{legal.privacyPolicy.href}"
+                       th:text="#{legal.privacyPolicy.title}"
+                       target="_blank"
+                    >Privacy Policy</a>
+                </div>
+                <div class="p-mr-4">
+                    <a th:href="#{legal.cookiePolicy.href}"
+                       th:text="#{legal.cookiePolicy.title}"
+                       target="_blank"
+                    >Cookies Policy</a>
+                </div>
+            </div>
+            <div class="p-d-flex p-ai-center">
+                <img th:src="@{/images/vialink-logo.svg}" alt="Vialink logo" height="22">
+                <span th:text="'Copyright ' + ${#dates.year(#dates.createNow())} + ' VIALINK'"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
